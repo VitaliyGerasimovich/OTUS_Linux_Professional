@@ -1,0 +1,5 @@
+1. sudo add-apt-repository ppa:cappelikan/ppa
+2. sudo apt update
+3. sudo apt install -y mainline pkexec
+4. sudo mainline install-latest
+5. reboot
