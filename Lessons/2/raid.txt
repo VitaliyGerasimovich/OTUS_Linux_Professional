@@ -1,0 +1,20 @@
+sudo mdadm --create --verbose /dev/md111 -l 10 -n 5 /dev/sd{b,c,d,e,f}
+sudo mdadm /dev/md111 --fail /dev/sdd
+cat /proc/mdstat (sdd [f])
+sudo mdadm /dev/md111 --remove /dev/sdd
+sudo parted -s /dev/md111 mklabel gpt
+sudo parted /dev/md111/ mkpart primary ext4 0% 20%
+sudo parted /dev/md111/ mkpart primary ext4 20% 40%
+sudo parted /dev/md111/ mkpart primary ext4 40% 60%
+sudo parted /dev/md111/ mkpart primary ext4 60% 80%
+sudo parted /dev/md111/ mkpart primary ext4 80% 100%
+sudo mkfs.ext4 /dev/md111p1
+sudo mkfs.ext4 /dev/md111p2
+sudo mkfs.ext4 /dev/md111p3
+sudo mkfs.ext4 /dev/md111p4
+sudo mkfs.ext4 /dev/md111p5
+sudo mkdir /mnt/{1,2,3,4,5}
+for i in $(seq 1 5); do sudo mount /dev/md111p$i /mnt/$i; done
+
+
+Самое удивительное, что 5 дисков по 1ГБ превратились в 2.5ГБ, ожидалось, что в 2ГБ
