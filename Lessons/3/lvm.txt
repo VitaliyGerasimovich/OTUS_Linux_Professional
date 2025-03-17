@@ -1,0 +1,11 @@
+1. lsblk - check disks
+2. pvcreate /dev/md127p{1,2,3,4,5} - create PVs
+3. vgcreate /dev/md127p1 - create VG
+4. lvcreate -l+85%FREE -n gvv_logvolume gvv - create LV
+5. mkfs.ext4 /dev/mapper/gvv-gvv_logvolume - format it LV into ext4
+6. vgextend gvv /dev/md127p2 - extend VG using second part
+7. mount /dev/mapper/gvv-gvv_logvolume /mnt - mouting 1-st part
+8. df -hT - check free space (355M)
+9. lvextend -l+70%FREE /dev/mapper/gvv-gvv_logvolume - extend LV
+10. df -hT - check free space (734M)
+11. resize2fs /dev/mapper/gvv-gvv_logvolume - resize FS
